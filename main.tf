@@ -93,7 +93,7 @@ resource "aws_vpc_security_group_egress_rule" "ipv6" {
   security_group_id = aws_security_group.github_runner.id
 
   ip_protocol = "-1"
-  cidr_ipv6 = "::/0"
+  cidr_ipv6   = "::/0"
 }
 
 resource "aws_instance" "github_runner" {
