@@ -76,18 +76,24 @@ resource "aws_security_group" "github_runner" {
   description = local.resource_name
   vpc_id      = var.vpc_id
 
-  # All traffic enabled for outbound (required for GitHub Actions)
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
   tags = {
     Name = local.resource_name
   }
+}
+
+# All traffic enabled for outbound (required for GitHub Actions)
+resource "aws_vpc_security_group_egress_rule" "ipv4" {
+  security_group_id = aws_security_group.github_runner.id
+
+  ip_protocol = "-1"
+  cidr_ipv4   = "0.0.0.0/0"
+}
+
+resource "aws_vpc_security_group_egress_rule" "ipv6" {
+  security_group_id = aws_security_group.github_runner.id
+
+  ip_protocol = "-1"
+  cidr_ipv6 = "::/0"
 }
 
 resource "aws_instance" "github_runner" {
