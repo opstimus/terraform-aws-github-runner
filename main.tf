@@ -129,8 +129,19 @@ resource "aws_instance" "github_runner" {
     unzip awscliv2.zip
     ./aws/install
 
-    # Get GitHub token from Secrets Manager using instance IAM role
-    GITHUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id "${local.github_token_secret_name}" --region "${var.deploy_region}" --query 'SecretString' --output text)
+    # Wait until IAM role credentials are available
+    echo "Waiting for IAM role credentials..."
+    until aws sts get-caller-identity --region ${var.deploy_region} >/dev/null 2>&1; do
+      sleep 2
+    done
+    echo "IAM credentials are ready."
+
+    # Get GitHub token from Secrets Manager
+    GITHUB_TOKEN=$(aws secretsmanager get-secret-value \
+      --secret-id "${local.github_token_secret_name}" \
+      --region "${var.deploy_region}" \
+      --query 'SecretString' \
+      --output text)
 
     if [ -z "$GITHUB_TOKEN" ]; then
       echo "ERROR: Failed to retrieve GitHub token from Secrets Manager"
