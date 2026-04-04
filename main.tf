@@ -132,6 +132,13 @@ resource "aws_codestarconnections_connection" "github" {
   provider_type = "GitHub"
 }
 
+# Registers the CodeConnections GitHub App as the credential for CodeBuild GitHub operations
+resource "aws_codebuild_source_credential" "github" {
+  auth_type   = "CODECONNECTIONS"
+  server_type = "GITHUB"
+  token       = local.github_connection_arn
+}
+
 resource "aws_codebuild_project" "github_runner" {
   name          = local.resource_name
   description   = "GitHub Actions runner for ${var.github_repository}"
