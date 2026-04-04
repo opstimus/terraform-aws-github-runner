@@ -163,6 +163,11 @@ resource "aws_codebuild_project" "github_runner" {
     git_submodules_config {
       fetch_submodules = false
     }
+
+    auth {
+      type     = "CODECONNECTIONS"
+      resource = local.github_connection_arn
+    }
   }
 
   vpc_config {
