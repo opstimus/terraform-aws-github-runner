@@ -86,8 +86,13 @@ resource "aws_iam_role_policy" "github_runner_connections" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = ["codestar-connections:UseConnection"]
+        Effect = "Allow"
+        Action = [
+          "codestar-connections:UseConnection",
+          "codeconnections:UseConnection",
+          "codeconnections:GetConnectionToken",
+          "codeconnections:GetConnection"
+        ]
         Resource = local.github_connection_arn
       }
     ]
