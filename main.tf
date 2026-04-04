@@ -191,6 +191,11 @@ resource "aws_codebuild_project" "github_runner" {
   tags = {
     Name = local.resource_name
   }
+
+  depends_on = [
+    aws_iam_role_policy.github_runner_connections,
+    aws_codebuild_source_credential.github,
+  ]
 }
 
 resource "aws_codebuild_webhook" "github_runner" {
