@@ -65,8 +65,8 @@ resource "aws_iam_role_policy" "github_runner_vpc" {
         Resource = "*"
       },
       {
-        Effect = "Allow"
-        Action = ["ec2:CreateNetworkInterfacePermission"]
+        Effect   = "Allow"
+        Action   = ["ec2:CreateNetworkInterfacePermission"]
         Resource = "arn:aws:ec2:${var.deploy_region}:*:network-interface/*"
         Condition = {
           StringEquals = {
