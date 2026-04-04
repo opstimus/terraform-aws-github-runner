@@ -19,6 +19,6 @@ output "github_connection_arn" {
 }
 
 output "runs_on_label" {
-  description = "Static prefix for the GitHub Actions runs-on label. Append -${{ github.run_id }}-${{ github.run_attempt }} in your workflow."
+  description = "Static prefix for the GitHub Actions runs-on label. Append -GITHUB_RUN_ID-GITHUB_RUN_ATTEMPT in your workflow."
   value       = "codebuild-${aws_codebuild_project.github_runner.name}"
 }
