@@ -1,3 +1,12 @@
+> ⚠️ **Moved to the monorepo.**
+> This module now lives in [`opstimus/terraform-modules`](https://github.com/opstimus/terraform-modules) at `modules/aws-github-runner`.
+>
+> ```hcl
+> source = "git::https://github.com/opstimus/terraform-modules.git//modules/aws-github-runner?ref=aws-github-runner/v3.0.0"
+> ```
+>
+> This repository remains for existing consumers; new development happens in the monorepo.
+
 # GitHub Actions Self-Hosted Runner on EC2
 
 ## Description
